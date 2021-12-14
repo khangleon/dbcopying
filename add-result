@@ -1,0 +1,55 @@
+#!/bin/sh
+# -------------------------------------------------------------------------
+# Metro 2 Sky Launcher
+# -------------------------------------------------------------------------
+
+MAIN_CLASS=vn.com.skyone.metro2sky.AddResult
+
+JAVA_HOME=/opt/java/jdk
+
+DIRNAME="`dirname "$0"`"
+DIRPATH=$(pwd)
+
+# OS specific support (must be 'true' or 'false').
+cygwin=false;
+case "`uname`" in
+    CYGWIN*)
+        cygwin=true
+        ;;
+esac
+
+# For Cygwin, ensure paths are in UNIX format before anything is touched
+if $cygwin ; then
+    [ -n "$DCM4CHE_HOME" ] &&
+        DCM4CHE_HOME=`cygpath --unix "$DCM4CHE_HOME"`
+    [ -n "$JAVA_HOME" ] &&
+        JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
+fi
+
+# Setup DCM4CHE_HOME
+if [ "x$DCM4CHE_HOME" = "x" ]; then
+    DCM4CHE_HOME=`cd "$DIRNAME"/..; pwd`
+fi
+
+# Setup the JVM
+if [ "x$JAVA_HOME" != "x" ]; then
+    JAVA=$JAVA_HOME/bin/java
+else
+    JAVA="java"
+fi
+
+CP="$CP:$DIRPATH/main/metro2sky.jar"
+CP="$CP:$DIRPATH/lib/commons-cli-1.3.1.jar"
+CP="$CP:$DIRPATH/lib/commons-dbcp2-2.1.jar"
+CP="$CP:$DIRPATH/lib/commons-logging-1.2.jar"
+CP="$CP:$DIRPATH/lib/commons-net-3.3.jar"
+CP="$CP:$DIRPATH/lib/commons-pool2-2.3.jar"
+CP="$CP:$DIRPATH/lib/log4j-api-2.11.1.jar"
+CP="$CP:$DIRPATH/lib/log4j-core-2.11.1.jar"
+CP="$CP:$DIRPATH/lib/mysql-connector-java-5.1.38.jar"
+CP="$CP:$DIRPATH/lib/postgresql-42.2.2.jar"
+CP="$CP:$DIRPATH/lib/sqljdbc4-4.2.jar"
+
+#echo $JAVA $JAVA_OPTS -cp "$CP" $MAIN_CLASS "$@"
+
+exec $JAVA $JAVA_OPTS -cp "$CP" $MAIN_CLASS "$@"
